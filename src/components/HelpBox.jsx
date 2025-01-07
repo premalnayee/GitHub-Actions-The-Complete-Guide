@@ -12,8 +12,8 @@ function HelpBox({ title, text }) {
 }
 
 HelpBox.propTypes = {
-  title: string,
-  text: string,
+  title: string.isRequired,
+  text: string.isRequired,
 };
 
 export default HelpBox;
