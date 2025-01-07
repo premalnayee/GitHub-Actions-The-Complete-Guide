@@ -18,6 +18,8 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+    outputs:
+      script-file: ${{ steps.build.script-file}}
     steps:
       - name: Get code
         uses: actions/checkout@v3
@@ -30,6 +32,8 @@ jobs:
         with:
           name: dist-files
           path: dist
+      - name: Publish JS filename
+        run: find dist/assests/*.js -type f -execdir echo 'script-file={}' >> $GIHUB_OUTPUT ';'
   deploy:
     needs: build
     runs-on: ubuntu-latest
