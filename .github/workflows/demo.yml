@@ -41,4 +41,4 @@ jobs:
         with:
           name: dist-files
       - name: Ouput files
-        run: ls dist
+        run: ls
