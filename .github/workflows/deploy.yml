@@ -4,9 +4,15 @@ on:
     branches:
       - main
       - dev
+env:
+  MONGODB_DB_NAME: gha-demo
 jobs:
   test:
-    environment: testing
+    env:
+      MONGODB_CLUSTER_ADDRESS: cluster0.6btq4.mongodb.net
+      MONGODB_USERNAME: premal
+      MONGODB_PASSWORD: MeI4J9x4oHL6clBD
+      PORT: 8080
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
@@ -19,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run server
-        run: npm start & npx wait-on http://127.0.0.1:XYZ
+        run: npm start & npx wait-on http://127.0.0.1:$PORT
       - name: Run tests
         run: npm test
       - name: Output information
