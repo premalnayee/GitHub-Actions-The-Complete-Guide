@@ -10,8 +10,8 @@ jobs:
   test:
     env:
       MONGODB_CLUSTER_ADDRESS: cluster0.6btq4.mongodb.net
-      MONGODB_USERNAME: premal
-      MONGODB_PASSWORD: MeI4J9x4oHL6clBD
+      MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
+      MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
       PORT: 8080
     runs-on: ubuntu-latest
     steps:
@@ -29,7 +29,7 @@ jobs:
       - name: Run tests
         run: npm test
       - name: Output information
-        run: echo "..."
+        run: echo "MONGODB_USERNAME: $MONGODB_USERNAME"
   deploy:
     needs: test
     runs-on: ubuntu-latest
