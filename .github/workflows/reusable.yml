@@ -7,6 +7,14 @@ on:
                 required: true
                 default: 'website'
                 type: string
+        secrets:
+            FTP_SERVER:
+                description: 'FTP server'
+                required: true
+        outputs:
+            result:
+                description: 'Result of the deployment'
+                value: ${{ jobs.deploy.outputs.outcome }}
 jobs:
     deploy:
         runs-on: ubuntu-latest

@@ -71,6 +71,15 @@ jobs:
     uses: ./.github/workflows/reusable.yml
     with:
       artifact-name: dist-files
+    secrets:
+      FTP_SERVER: ${{ secrets.FTP_SERVER }}
+  print-deploy-result:
+    if: always()
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output information
+        run: echo "Deployment result: ${{ needs.deploy.outputs.result }}"
   report:
     if: failure()
     needs: test
