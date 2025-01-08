@@ -1,0 +1,8 @@
+name: Reusable Deploy
+on: workflow_run
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Output information
+              run: echo "Deploying the website"
