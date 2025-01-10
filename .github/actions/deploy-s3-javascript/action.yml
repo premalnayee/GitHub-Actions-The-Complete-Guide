@@ -11,6 +11,9 @@ inputs:
   source:
     description: 'The directory to deploy to the S3 bucket'
     required: true
+output:
+  s3uri:
+    description: 'The URI of the deployed files in S3'
 runs:
   using: 'node16'
   main: 'main.js'

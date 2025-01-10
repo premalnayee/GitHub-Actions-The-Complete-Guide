@@ -19,6 +19,9 @@ function run() {
     process.env.AWS_SECRET_ACCESS_KEY,
   ]);
   core.notice('Deploying to S3');
+
+  // Send output
+  core.setOutput('s3uri', s3uri);
 }
 
 run();
