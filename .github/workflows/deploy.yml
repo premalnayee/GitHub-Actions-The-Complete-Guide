@@ -85,14 +85,15 @@ jobs:
       - name: Output S3 URI
         run: echo "Deployed to ${{ steps.deployS3.outputs.s3uri }}"
       - name: Deploy to S3 with Dockerfile
+        id: deployS3Docker
         env:
           AWS_ACCESS_KEY_ID: 'AWS_ACCESS_KEY_ID' #${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: 'AWS_SECRET_ACCESS_KEY' # ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: ./.github/actions/dockerfile/
+        uses: ./.github/actions/dockerfile/
         with:
           bucket: 'archive bucket'
           bucket_region: 'eu-west-1'
           dist_folder: 'dist'
       - name: Output Information
         run: |
-          echo "Live URL: ${{ steps.deployS3.outputs.website-url }}"
+          echo "Live URL: ${{ steps.deployS3Docker.outputs.website-url }}"
