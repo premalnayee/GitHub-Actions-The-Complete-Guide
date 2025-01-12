@@ -1,27 +1,19 @@
-import * as core from '@actions/core';
-import * as github from '@actions/github';
-import * as exec from '@actions/exec';
+const core = require('@actions/core');
+// const github = require('@actions/github');
+const exec = require('@actions/exec');
 
 function run() {
-  // get some input values
+  // 1) Get some input values
   const bucket = core.getInput('bucket', { required: true });
-  const source = core.getInput('source', { required: true });
-  const region = core.getInput('region', { required: true });
+  const bucketRegion = core.getInput('bucket-region', { required: true });
+  const distFolder = core.getInput('dist-folder', { required: true });
 
-  // Pretend to deploy to S3
-  const s3uri = `s3://${bucket}/${source}`;
-  exec.exec('echo', ['Deploying to', s3uri, 'in', region]);
+  // 2) Upload files
+  const s3Uri = `s3://${bucket}`;
+  exec.exec(`aws s3 sync ${distFolder} ${s3Uri} --region ${bucketRegion}`);
 
-  // Show the  AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
-  exec.exec('echo', ['AWS_ACCESS_KEY_ID:', process.env.AWS_ACCESS_KEY_ID]);
-  exec.exec('echo', [
-    'AWS_SECRET_ACCESS_KEY:',
-    process.env.AWS_SECRET_ACCESS_KEY,
-  ]);
-  core.notice('Deploying to S3');
-
-  // Send output
-  core.setOutput('s3uri', s3uri);
+  const websiteUrl = `http://${bucket}.s3-website-${bucketRegion}.amazonaws.com`;
+  core.setOutput('website-url', websiteUrl); // ::set-output
 }
 
 run();
